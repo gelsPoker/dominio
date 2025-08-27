@@ -11,7 +11,7 @@
     <!-- navbar -->
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Running</a>
+      <a class="navbar-brand" href="#">PartyTime</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -20,16 +20,16 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Empresa</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#m2">Quienes somos</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#m22">Quienes somos</a></li>
               <li><a class="dropdown-item" href="#">Mision</a></li>
               <li><a class="dropdown-item" href="#">Vision</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="productos.html">Productos</a>
+            <a class="nav-link" href="productos.html">Productos</a>                               <!-- productos.html, nos vamos a otra pagina web-->
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Servicios</a>
+            <a class="nav-link" href="#">Servicios</a>                                            <!-- href="#" Significa que no navega a nada-->
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#m11">Contacto</a>
@@ -84,7 +84,7 @@
     </div>
   </div>
   
-  <!-- Modal 1-----------------30:00----------------------------------------------------------------------------->
+  <!-- Modal 1-----------------30:00---------------------------------------------------------------------------------------->
   
   <div class="modal fade" id="m11">
     <div class="modal-dialog">
@@ -92,7 +92,58 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
+          <h4 class="modal-title">Ingrese Informacion</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">  <!-- Aqui editamos la parte Adentro de CONTACTO, BS5 Forms,  ------------------------------------------------------------------>  
+        <form action="/action_page.php">
+          <div class="mb-3 mt-3">
+            <label for="email" class="form-label">Nombre</label>
+            <input type="email" class="form-control" id="email" placeholder="nombre + apellido" name="email">
+          </div>
+          <div class="mb-3 mt-3">
+            <label for="email" class="form-label">Edad:</label>
+            <input type="email" class="form-control" id="email" placeholder="edad en años" name="email">
+          </div>
+          <div class="form-group mb-3">
+            <label for="exampleFormControlTextarea1">Mensaje (Opcional)</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+          </div>
+          <button type="button" class="btn btn-primary">Enviar</button>
+        </form>
+        </div>
+        <!----------------------------------------------------------, BS5 Forms, Input groups, form Validation ------------------------------------------------------------------------->  
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+      
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- Modal 1----------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+  <!-- Modal 2----------------------------------------------------------------------------------------------------------------------------------------------------->
+  <div class="container mt-3">
+    <h3>Fullscreen Modal Example</h3>
+    <p>Click on the button to open the fullscreen modal.</p>
+  
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+    Open modal
+    </button>
+  </div>
+
+  <!-- The Modal -->
+  <div class="modal fade" id="m22">
+    <div class="modal-dialog modal-lg"> <!-- fullscreen( tamaño comppleto), modal-lg -->
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Quienes Somos </h4>  <!-- Alguien tiene que asignar el id(m22), volvemos al navbar, y agregamos el tag data-bs-togle...  -->
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -109,7 +160,7 @@
       </div>
     </div>
   </div>
-  <!-- Modal 1---------------------------------------------------------------------------------------------->
+  <!-- Modal 2---------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
 </body>
