@@ -1,72 +1,281 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <title>VeggiGo — Menú</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Catálogo de platos veganos para llevar: bowls, wraps, burgers, sopas y postres." />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    .card-img-top{height:180px;object-fit:cover}
+    .badge-vegan{background:#198754}
+    .controls .form-select, .controls .form-control{min-width:200px}
+  </style>
 </head>
 <body>
-    <!-- navbar -->
-  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">productos</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Catalogo</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#m2">Precios</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Ofertas</a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="#">Reclamos</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- Carousel -->
-<div id="demo" class="carousel slide" data-bs-ride="carousel">
+  <!-- Navbar simple para volver -->
+  <nav class="navbar navbar-dark bg-success">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">VeggiGo</a>
+      <a class="btn btn-dark" href="index.html#menu"><i class="bi bi-arrow-left"></i> Volver</a>
+    </div>
+  </nav>
 
-  <!-- Indicators/dots -->
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-  </div>
-  
-  <!-- The slideshow/carousel -->
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="img/la.jpg" alt="Los Angeles" class="d-block" style="width:100%">
-      <div class="carousel-caption">
-        <h3>Los Angeles</h3>
-        <p>We had such a great time in LA!</p>
+  <main class="container py-4">
+    <header class="mb-3">
+      <h1 class="h3 mb-1">Menú</h1>
+      <p class="text-muted mb-0">Elige por categoría, busca por nombre o ingrediente y ordena por precio.</p>
+    </header>
+
+    <!-- Controles -->
+    <div class="controls d-flex flex-wrap gap-2 align-items-center mb-3">
+      <div class="btn-group" role="group" aria-label="Filtros por categoría">
+        <button class="btn btn-outline-success active" data-filter="all">Todo</button>
+        <button class="btn btn-outline-success" data-filter="bowls">Bowls</button>
+        <button class="btn btn-outline-success" data-filter="wraps">Wraps</button>
+        <button class="btn btn-outline-success" data-filter="burgers">Burgers</button>
+        <button class="btn btn-outline-success" data-filter="sopas">Sopas</button>
+        <button class="btn btn-outline-success" data-filter="postres">Postres</button>
+      </div>
+
+      <div class="ms-auto d-flex flex-wrap gap-2">
+        <input id="search" class="form-control" type="search" placeholder="Buscar plato o ingrediente…" aria-label="Buscar">
+        <select id="sort" class="form-select" aria-label="Ordenar por">
+          <option value="none">Ordenar: predeterminado</option>
+          <option value="precio-asc">Precio: menor a mayor</option>
+          <option value="precio-desc">Precio: mayor a menor</option>
+          <option value="nombre-asc">Nombre: A → Z</option>
+          <option value="nombre-desc">Nombre: Z → A</option>
+        </select>
       </div>
     </div>
-  <!-- Left and right controls/icons -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</div>
 
-<div class="container-fluid mt-3">
-  <h3>Carousel Example</h3>
-  <p>The following example shows how to create a basic carousel with indicators and controls.</p>
-</div>
-    <!-- Contenido GridSystem-->
-    <!-- Footer -->
-    <!-- Modal-->
+    <!-- Grid -->
+    <div id="grid" class="row g-4"></div>
+
+    <p id="empty" class="text-center text-muted mt-4 d-none">No encontramos resultados para tu búsqueda.</p>
+  </main>
+
+  <!-- Modal de detalle -->
+  <div class="modal fade" id="detalleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="detalleTitulo" class="modal-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <img id="detalleImg" src="" alt="" class="img-fluid rounded mb-3">
+          <p id="detalleDesc" class="mb-2"></p>
+          <span id="detalleCat" class="badge bg-success"></span>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <strong id="detallePrecio" class="fs-5 mb-0"></strong>
+          <button class="btn btn-success" data-action="agregar"><i class="bi bi-cart-plus"></i> Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor para toasts -->
+  <div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index:1080">
+    <div id="toast" class="toast align-items-center text-bg-success border-0" role="status" aria-live="polite" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          Agregado al pedido.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Lógica del catálogo -->
+  <script>
+    // 1) Data del catálogo (edítala a tu gusto)
+    const productos = [
+      {
+        id: "bowl-proteico",
+        nombre: "Bowl Proteico",
+        precio: 6900,
+        categoria: "bowls",
+        desc: "Quinoa, tofu al sésamo, kale, palta y aderezo tahini-limón.",
+        img: "img/bowl-quinoa.jpg",
+        search: "bowl quinoa tofu tahini palta proteico"
+      },
+      {
+        id: "wrap-falafel",
+        nombre: "Wrap de Falafel",
+        precio: 5900,
+        categoria: "wraps",
+        desc: "Falafel horneado, hummus, pepino, tomate y tahini.",
+        img: "img/wrap-falafel.jpg",
+        search: "wrap falafel hummus pepino tomate"
+      },
+      {
+        id: "buddha-bowl",
+        nombre: "Buddha Bowl",
+        precio: 6500,
+        categoria: "bowls",
+        desc: "Garbanzos especiados, camote, mix verdes y dressing cítrico.",
+        img: "img/buddha-bowl.jpg",
+        search: "buddha bowl garbanzos camote ensalada"
+      },
+      {
+        id: "burger-lentejas",
+        nombre: "Burger de Lentejas",
+        precio: 7200,
+        categoria: "burgers",
+        desc: "Pan integral, medallón de lentejas, cebolla morada y bbq casera.",
+        img: "img/burger-lentejas.jpg",
+        search: "hamburguesa burger lentejas bbq pan integral"
+      },
+      {
+        id: "ramen-miso",
+        nombre: "Ramen Miso",
+        precio: 7900,
+        categoria: "sopas",
+        desc: "Caldo miso, tofu, shiitake, nori y cebollín.",
+        img: "img/ramen-miso.jpg",
+        search: "ramen miso sopa tofu shiitake nori cebollin"
+      },
+      {
+        id: "brownie-cacao",
+        nombre: "Brownie Cacao",
+        precio: 3500,
+        categoria: "postres",
+        desc: "Brownie vegano con nueces tostadas.",
+        img: "img/brownie.jpg",
+        search: "postre brownie cacao nueces"
+      }
+    ];
+
+    // 2) Estado de UI
+    const state = {
+      categoria: "all",
+      query: "",
+      sort: "none"
+    };
+
+    // 3) Renderizado
+    const grid = document.getElementById("grid");
+    const empty = document.getElementById("empty");
+    const detalleModalEl = document.getElementById("detalleModal");
+    const detalleModal = new bootstrap.Modal(detalleModalEl);
+    const toast = new bootstrap.Toast(document.getElementById("toast"));
+
+    function formatPrice(n){ return `$${n.toLocaleString('es-CL')}`; }
+
+    function render(){
+      let data = productos.slice();
+
+      // filtro por categoría
+      if(state.categoria !== "all"){
+        data = data.filter(p => p.categoria === state.categoria);
+      }
+      // búsqueda
+      const q = state.query.trim().toLowerCase();
+      if(q){
+        data = data.filter(p => (p.nombre + " " + p.search).toLowerCase().includes(q));
+      }
+      // orden
+      switch(state.sort){
+        case "precio-asc": data.sort((a,b)=> a.precio - b.precio); break;
+        case "precio-desc": data.sort((a,b)=> b.precio - a.precio); break;
+        case "nombre-asc": data.sort((a,b)=> a.nombre.localeCompare(b.nombre)); break;
+        case "nombre-desc": data.sort((a,b)=> b.nombre.localeCompare(a.nombre)); break;
+      }
+
+      // pintar grid
+      grid.innerHTML = data.map(p=>`
+        <div class="col-sm-6 col-lg-4">
+          <div class="card h-100 shadow-sm">
+            <img src="${p.img}" class="card-img-top" alt="${p.nombre}">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex justify-content-between align-items-start mb-1">
+                <h5 class="card-title mb-0">${p.nombre}</h5>
+                <span class="badge badge-vegan text-white">Vegano</span>
+              </div>
+              <p class="card-text small flex-grow-1">${p.desc}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <strong>${formatPrice(p.precio)}</strong>
+                <div class="btn-group">
+                  <button class="btn btn-outline-success btn-sm" data-action="detalle" data-id="${p.id}">
+                    <i class="bi bi-eye"></i> Ver
+                  </button>
+                  <button class="btn btn-success btn-sm" data-action="agregar" data-id="${p.id}">
+                    <i class="bi bi-cart-plus"></i> Agregar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      empty.classList.toggle("d-none", data.length !== 0);
+    }
+
+    // 4) Eventos de UI
+    // Filtros por categoría
+    document.querySelectorAll('[data-filter]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        state.categoria = e.currentTarget.dataset.filter;
+        render();
+      });
+    });
+
+    // Búsqueda (con ligera espera)
+    let t;
+    document.getElementById('search').addEventListener('input', (e)=>{
+      clearTimeout(t);
+      t = setTimeout(()=>{ state.query = e.target.value; render(); }, 200);
+    });
+
+    // Orden
+    document.getElementById('sort').addEventListener('change', (e)=>{
+      state.sort = e.target.value;
+      render();
+    });
+
+    // Delegación de eventos: ver detalle / agregar
+    grid.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button[data-action]');
+      if(!btn) return;
+      const { action, id } = btn.dataset;
+      const prod = productos.find(p=>p.id===id);
+      if(!prod) return;
+
+      if(action === 'detalle'){
+        document.getElementById('detalleTitulo').textContent = prod.nombre;
+        document.getElementById('detalleImg').src = prod.img;
+        document.getElementById('detalleImg').alt = prod.nombre;
+        document.getElementById('detalleDesc').textContent = prod.desc;
+        document.getElementById('detalleCat').textContent = prod.categoria.toUpperCase();
+        document.getElementById('detallePrecio').textContent = formatPrice(prod.precio);
+        detalleModal.show();
+
+        // botón agregar dentro del modal
+        detalleModalEl.querySelector('[data-action="agregar"]').onclick = ()=>{
+          // Aquí en el futuro: lógica real de carrito
+          toast.show();
+          detalleModal.hide();
+        };
+      }
+
+      if(action === 'agregar'){
+        // Aquí en el futuro: lógica real de carrito
+        toast.show();
+      }
+    });
+
+    // 5) Primer render
+    render();
+  </script>
 </body>
 </html>
