@@ -18,7 +18,7 @@
   <nav class="navbar navbar-dark bg-success">
     <div class="container">
       <a class="navbar-brand fw-bold" href="ComidaVegana.html">VeggiGo</a>
-      <a class="btn btn-dark" href="CarritoCompras.html"><i class="bi bi-arrow-left"></i> Volver</a>
+      <a class="btn btn-dark" href="ComidaVegana.html"><i class="bi bi-arrow-left"></i> Volver</a>
     </div>
   </nav>
 
@@ -95,10 +95,12 @@
 
   <!-- Lógica del catálogo -->
   <script>
-    // --- Carrito (localStorage) para esta página ---
+        // --- Carrito (localStorage) para esta página ---
     const CART_KEY = 'veggigo_cart_v1';
+
     function getCart(){ try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch { return []; } }
     function saveCart(cart){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+
     function addToCart(product, qty=1){
       const cart = getCart();
       const i = cart.findIndex(p => p.id === product.id);
@@ -106,7 +108,6 @@
       else cart.push({ ...product, qty });
       saveCart(cart);
     }
-
     // 1) Data del catálogo 
     const productos = [
       {
@@ -235,62 +236,65 @@
     // Filtros por categoría
     document.querySelectorAll('[data-filter]').forEach(btn=>{
       btn.addEventListener('click', (e)=>{
-        document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remo
-    // Delegación de eventos: ver detalle / agregar
-    grid.addEventListener('click', (e)=>{
-      const btn = e.target.closest('button[data-action]');
-      if(!btn) return;
-      const { action, id } = btn.dataset;
-      const prod = productos.find(p=>p.id===id);
-      if(!prod) return;
+        document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        state.categoria = e.currentTarget.dataset.filter;
+        render();
+      });
+    });
 
-      if(action === 'detalle'){
-        document.getElementById('detalleTitulo').textContent = prod.nombre;
-        document.getElementById('detalleImg').src = prod.img;
-        document.getElementById('detalleImg').alt = prod.nombre;
-        document.getElementById('detalleDesc').textContent = prod.desc;
-        document.getElementById('detalleCat').textContent = prod.categoria.toUpperCase();
-        document.getElementById('detallePrecio').textContent = formatPrice(prod.precio);
-        detalleModal.show();
+    // Búsqueda (con ligera espera)
+    let t;
+    document.getElementById('search').addEventListener('input', (e)=>{
+      clearTimeout(t);
+      t = setTimeout(()=>{ state.query = e.target.value; render(); }, 200);
+    });
 
-        // botón "Agregar" dentro del modal -> AGREGA + REDIRIGE
-        detalleModalEl.querySelector('[data-action="agregar"]').onclick = ()=>{
-          addToCart(
-            { id: prod.id, name: prod.nombre, price: prod.precio, image: prod.img },
-            1
-          );
-          try { toast.show(); } catch {}
-          setTimeout(()=>{ window.location.href = 'CarritoCompras.html'; }, 150);
-        };
-      }
+    // Orden
+    document.getElementById('sort').addEventListener('change', (e)=>{
+      state.sort = e.target.value;
+      render();
+    });
 
-      if(action === 'agregar'){
-        // botón "Agregar" de la tarjeta -> AGREGA + REDIRIGE
+  // Delegación de eventos: ver detalle / agregar
+  grid.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button[data-action]');
+    if(!btn) return;
+    const { action, id } = btn.dataset;
+    const prod = productos.find(p=>p.id===id);
+    if(!prod) return;
+
+    if(action === 'detalle'){
+      document.getElementById('detalleTitulo').textContent = prod.nombre;
+      document.getElementById('detalleImg').src = prod.img;
+      document.getElementById('detalleImg').alt = prod.nombre;
+      document.getElementById('detalleDesc').textContent = prod.desc;
+      document.getElementById('detalleCat').textContent = prod.categoria.toUpperCase();
+      document.getElementById('detallePrecio').textContent = formatPrice(prod.precio);
+      detalleModal.show();
+
+      // botón "Agregar" dentro del modal -> AGREGA + REDIRIGE
+      detalleModalEl.querySelector('[data-action="agregar"]').onclick = ()=>{
         addToCart(
           { id: prod.id, name: prod.nombre, price: prod.precio, image: prod.img },
           1
         );
+        // opcional: muestra toast y redirige con una pequeña espera
         try { toast.show(); } catch {}
-        setTimeout(()=>{ window.location.href = 'CarritoCompras.html'; }, 150);
-      }
-    });
-oUpperCase();
-        document.getElementById('detallePrecio').textContent = formatPrice(prod.precio);
-        detalleModal.show();
+        setTimeout(()=>{ window.location.href = 'CarritoCompras.html'; }, 250);
+      };
+    }
 
-        // botón agregar dentro del modal
-        detalleModalEl.querySelector('[data-action="agregar"]').onclick = ()=>{
-          // Aquí en el futuro: lógica real de carrito
-          toast.show();
-          detalleModal.hide();
-        };
-      }
-
-      if(action === 'agregar'){
-        // Aquí en el futuro: lógica real de carrito
-        toast.show();
-      }
-    });
+    if(action === 'agregar'){
+      // botón "Agregar" de la tarjeta -> AGREGA + REDIRIGE
+      addToCart(
+        { id: prod.id, name: prod.nombre, price: prod.precio, image: prod.img },
+        1
+      );
+      try { toast.show(); } catch {}
+      setTimeout(()=>{ window.location.href = 'CarritoCompras.html'; }, 250);
+    }
+  });
 
     // 5) Primer render
     render();
