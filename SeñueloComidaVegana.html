@@ -1,527 +1,232 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>VeggiGo — Comida Vegana Para Llevar</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="VeggiGo: comida vegana para llevar, fresca y deliciosa. Pide online, retira en tienda o recibe en casa." />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    :root {
-      --brand:#198754; /* Bootstrap success */
-      --brand-ink:#0b3d2b;
-    }
-    body{font-family:system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";}
-    .navbar{box-shadow:0 4px 14px rgba(0,0,0,.08)}
-    .carousel-item img{height:60vh; object-fit:cover;}
-    .section-pad{padding:4rem 0;}
-    .feature-icon{font-size:2rem}
-    .card img{height:180px; object-fit:cover;}
-    .badge-vegan{background:var(--brand); }
-    footer a{color:#fff;text-decoration:none}
-    .search-empty{display:none}
-  </style>
-</head>
-<body>
-
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="#">VeggiGo</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div id="mainNav" class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Empresa</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalQuienes">Quiénes Somos</a></li>
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalMision">Misión</a></li>
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalVision">Visión</a></li>
-            </ul>
-          </li>
-          <li class="nav-item"><a class="nav-link" href="#menu">Menú</a></li>
-          <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
-          <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalContacto">Contacto</a></li>
-          <!-- Si prefieres página separada: <a class="nav-link" href="productos.html">Menú completo</a> -->
-        </ul>
-
-        <form class="d-flex" role="search" onsubmit="event.preventDefault(); filtrarMenu();">
-          <input id="searchInput" class="form-control me-2" type="search" placeholder="Buscar platos" aria-label="Buscar">
-          <button class="btn btn-dark" type="button" onclick="filtrarMenu()">Buscar</button>
-        </form>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero / Carousel -->
-  <div id="hero" class="carousel slide" data-bs-ride="carousel" aria-label="Promociones">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#hero" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#hero" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#hero" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="img/comidaVegana2.jpeg" class="d-block w-100" alt="Bowl vegano colorido">
-        <div class="carousel-caption d-none d-md-block">
-          <h1 class="fw-bold">Comida vegana lista para llevar</h1>
-          <p>Fresca, sabrosa y sostenible.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="img/comidaVegana7.jpg" class="d-block w-100" alt="Wrap vegetal saludable">
-        <div class="carousel-caption d-none d-md-block">
-          <h2 class="fw-semibold">Ordena online</h2>
-          <p>Retira en tienda o recibe en casa.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="img/comidavegana8.jpg" class="d-block w-100" alt="Ensalada fresca">
-        <div class="carousel-caption d-none d-md-block">
-          <h2 class="fw-semibold">Ingredientes reales</h2>
-          <p>Sin ultraprocesados, 100% plantas.</p>
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#hero" data-bs-slide="prev" aria-label="Anterior">
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#hero" data-bs-slide="next" aria-label="Siguiente">
-      <span class="carousel-control-next-icon"></span>
-    </button>
-  </div>
-
-  <!-- Cómo funciona -->
-  <section class="section-pad">
-    <div class="container">
-      <div class="row text-center g-4">
-        <div class="col-md-4">
-          <div class="p-4 border rounded-4 h-100">
-            <div class="feature-icon mb-3"><i class="bi bi-bag-check"></i></div>
-            <h5>Pide en 3 pasos</h5>
-            <p class="mb-0">Elige tu plato, confirma y listo. Sin complicaciones.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="p-4 border rounded-4 h-100">
-            <div class="feature-icon mb-3"><i class="bi bi-leaf"></i></div>
-            <h5>100% Vegano</h5>
-            <p class="mb-0">Recetas balanceadas, sin ingredientes de origen animal.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="p-4 border rounded-4 h-100">
-            <div class="feature-icon mb-3"><i class="bi bi-truck"></i></div>
-            <h5>Para llevar o delivery</h5>
-            <p class="mb-0">Retira en tienda o recibe donde estés.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Menú destacado -->
-  <section id="menu" class="section-pad bg-light">
-    <div class="container">
-      <div class="d-flex align-items-center justify-content-between mb-3">
-        <h2 class="mb-0">Menú destacado</h2>
-        <a class="btn btn-outline-success" href="productos.html">Ver menú completo</a>
-      </div>
-
-      <div class="row g-4" id="menuGrid">
-        <!-- Card 1 -->
-        <div class="col-sm-6 col-lg-4 menu-item" data-name="Bowl proteico quinoa tofu">
-          <div class="card h-100 shadow-sm">
-            <img src="img/bowl-quinoa.jpg" class="card-img-top" alt="Bowl de quinoa y tofu" loading="lazy">
-            <div class="card-body">
-              <span class="badge badge-vegan mb-2">Vegano</span>
-              <h5 class="card-title">Bowl Proteico</h5>
-              <p class="card-text small">Quinoa, tofu al sésamo, kale, palta, aderezo tahini-limón.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <strong>$6.900</strong>
-                <button class="btn btn-success btn-sm">Agregar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 2 -->
-        <div class="col-sm-6 col-lg-4 menu-item" data-name="wrap falafel hummus">
-          <div class="card h-100 shadow-sm">
-            <img src="img/wrap-falafel.jpg" class="card-img-top" alt="Wrap de falafel" loading="lazy">
-            <div class="card-body">
-              <span class="badge badge-vegan mb-2">Vegano</span>
-              <h5 class="card-title">Wrap de Falafel</h5>
-              <p class="card-text small">Falafel horneado, hummus, pepino, tomate, salsa tahini.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <strong>$5.900</strong>
-                <button class="btn btn-success btn-sm">Agregar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 3 -->
-        <div class="col-sm-6 col-lg-4 menu-item" data-name="ensalada buddha bowl garbanzos">
-          <div class="card h-100 shadow-sm">
-            <img src="img/buddha-bowl.jpg" class="card-img-top" alt="Buddha bowl" loading="lazy">
-            <div class="card-body">
-              <span class="badge badge-vegan mb-2">Vegano</span>
-              <h5 class="card-title">Buddha Bowl</h5>
-              <p class="card-text small">Garbanzos especiados, camote, mix verdes, dressing cítrico.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <strong>$6.500</strong>
-                <button class="btn btn-success btn-sm">Agregar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 4 -->
-        <div class="col-sm-6 col-lg-4 menu-item" data-name="burger lentejas bbq">
-          <div class="card h-100 shadow-sm">
-            <img src="img/burger-lentejas.jpg" class="card-img-top" alt="Hamburguesa de lentejas" loading="lazy">
-            <div class="card-body">
-              <span class="badge badge-vegan mb-2">Vegano</span>
-              <h5 class="card-title">Burger de Lentejas</h5>
-              <p class="card-text small">Pan integral, medallón lentejas, cebolla morada, bbq casera.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <strong>$7.200</strong>
-                <button class="btn btn-success btn-sm">Agregar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 5 -->
-        <div class="col-sm-6 col-lg-4 menu-item" data-name="ramen miso tofu shiitake">
-          <div class="card h-100 shadow-sm">
-            <img src="img/ramen-miso.jpg" class="card-img-top" alt="Ramen miso vegano" loading="lazy">
-            <div class="card-body">
-              <span class="badge badge-vegan mb-2">Vegano</span>
-              <h5 class="card-title">Ramen Miso</h5>
-              <p class="card-text small">Caldillo miso, tofu, shiitake, nori, cebollín.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <strong>$7.900</strong>
-                <button class="btn btn-success btn-sm">Agregar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 6 -->
-        <div class="col-sm-6 col-lg-4 menu-item" data-name="postre brownie vegano">
-          <div class="card h-100 shadow-sm">
-            <img src="img/brownie.jpg" class="card-img-top" alt="Brownie vegano" loading="lazy">
-            <div class="card-body">
-              <span class="badge badge-vegan mb-2">Vegano</span>
-              <h5 class="card-title">Brownie Cacao</h5>
-              <p class="card-text small">Sin lácteos, sin huevos, con nueces tostadas.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <strong>$3.500</strong>
-                <button class="btn btn-success btn-sm">Agregar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <p id="searchEmpty" class="search-empty text-center mt-4 text-muted">No encontramos resultados para tu búsqueda.</p>
-    </div>
-  </section>
-
-  <!-- Nosotros -->
-  <section id="nosotros" class="section-pad">
-    <div class="container">
-      <div class="row align-items-center g-4">
-        <div class="col-md-6">
-          <img src="img/equipo.jpg" alt="Equipo VeggiGo" class="img-fluid rounded-4 shadow-sm" loading="lazy">
-        </div>
-        <div class="col-md-6">
-          <h2>Sobre VeggiGo</h2>
-          <p>Somos un equipo apasionado por la cocina basada en plantas. Creemos en la comida rica, accesible y con impacto positivo.</p>
-          <ul class="list-unstyled">
-            <li><i class="bi bi-check2-circle text-success"></i> Ingredientes locales y de temporada</li>
-            <li><i class="bi bi-check2-circle text-success"></i> Envases reciclables</li>
-            <li><i class="bi bi-check2-circle text-success"></i> Opciones sin gluten y altas en proteína</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="section-pad bg-success text-white text-center">
-    <div class="container">
-      <h3 class="mb-3">¿List@ para pedir?</h3>
-      <p class="mb-4">Suscríbete y recibe promos semanales.</p>
-      <form class="row g-2 justify-content-center" onsubmit="event.preventDefault(); alert('¡Gracias por suscribirte!');">
-        <div class="col-sm-7 col-md-5">
-          <input type="email" class="form-control form-control-lg" placeholder="tu@correo.com" required>
-        </div>
-        <div class="col-auto">
-          <button class="btn btn-dark btn-lg">Suscribirme</button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-4">
-    <div class="container">
-      <div class="row gy-3">
-        <div class="col-md-4">
-          <h5 class="mb-3">VeggiGo</h5>
-          <p class="small mb-1">Comida vegana para llevar</p>
-          <p class="small mb-0">© <span id="year"></span> VeggiGo</p>
-        </div>
-        <div class="col-md-4">
-          <h6 class="mb-3">Contacto</h6>
-          <p class="small mb-1"><i class="bi bi-pin-map"></i> Av. Central 123, Santiago</p>
-          <p class="small mb-1"><i class="bi bi-telephone"></i> +56 9 1234 5678</p>
-          <p class="small mb-0"><i class="bi bi-envelope"></i> hola@veggigo.cl</p>
-        </div>
-        <div class="col-md-4">
-          <h6 class="mb-3">Síguenos</h6>
-          <div class="d-flex gap-3">
-            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
-            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Modales -->
-  <div class="modal fade" id="modalContacto" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <form class="modal-content needs-validation" novalidate onsubmit="enviarContacto(event)">
-        <div class="modal-header">
-          <h5 class="modal-title">Contacto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="emailContacto" class="form-label">Email</label>
-            <input id="emailContacto" type="email" class="form-control" placeholder="tu@correo.com" required>
-            <div class="invalid-feedback">Ingresa un correo válido.</div>
-          </div>
-          <div class="mb-3">
-            <label for="msgContacto" class="form-label">Mensaje</label>
-            <textarea id="msgContacto" class="form-control" rows="4" required></textarea>
-            <div class="invalid-feedback">Cuéntanos en qué te ayudamos.</div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-success" type="submit">Enviar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div class="modal fade" id="modalQuienes" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Quiénes Somos</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          Somos una cocina vegana dedicada a preparar platos frescos y nutritivos para tu día a día. Trabajamos con productores locales y buscamos reducir nuestro impacto ambiental en cada pedido.
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="modalMision" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Misión</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          Democratizar la comida basada en plantas con preparaciones ricas, rápidas y accesibles, promoviendo salud y sostenibilidad.
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="modalVision" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Visión</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          Ser la cadena líder de comida vegana para llevar en Chile, inspirando hábitos conscientes a través de cada comida.
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Año footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Búsqueda en menú destacado
-    function filtrarMenu(){
-      const q = document.getElementById('searchInput').value.trim().toLowerCase();
-      const items = document.querySelectorAll('#menuGrid .menu-item');
-      let visibles = 0;
-      items.forEach(el=>{
-        const name = el.dataset.name.toLowerCase();
-        const show = !q || name.includes(q);
-        el.style.display = show ? '' : 'none';
-        if(show) visibles++;
-      });
-      document.getElementById('searchEmpty').style.display = (visibles===0) ? 'block' : 'none';
-    }
-
-    // Validación y envío de contacto
-    function enviarContacto(e){
-      const form = e.currentTarget;
-      if(!form.checkValidity()){
-        e.preventDefault(); e.stopPropagation();
-      }else{
-        e.preventDefault();
-        form.classList.remove('was-validated');
-        form.reset();
-        const modal = bootstrap.Modal.getInstance(document.getElementById('modalContacto'));
-        modal.hide();
-        const toast = document.createElement('div');
-        toast.className = 'position-fixed top-0 start-50 translate-middle-x p-3';
-        toast.innerHTML = '<div class="toast align-items-center text-bg-success border-0 show"><div class="d-flex"><div class="toast-body">¡Mensaje enviado! Te responderemos pronto.</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div></div>';
-        document.body.appendChild(toast);
-        setTimeout(()=> toast.remove(), 3000);
-      }
-      form.classList.add('was-validated');
-    }
-  </script>
-</body>
-</html>
-productos.html (menú completo con filtros por categoría)
-html
-Copiar código
-<!DOCTYPE html>
-<html lang="es">
-<head>
+  <title>Comida Vegana Para Llevar</title>
   <meta charset="utf-8">
-  <title>VeggiGo — Menú Completo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <style>.card img{height:180px;object-fit:cover}</style>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-  <nav class="navbar navbar-dark bg-success">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">VeggiGo</a>
-      <a class="btn btn-dark" href="index.html#menu">Volver</a>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-success">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">VeggiGo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Empresa</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#m2">Quienes Somos</a></li>
+                            <li><a class="dropdown-item" href="#">Mision</a></li>
+                            <li><a class="dropdown-item" href="#">Vision</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="productos.html">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#m1">Contacto</a>
+                    </li>  
+                </ul>
+                    <a href="CarritoCompras.html"
+                        class="btn btn-outline-light position-relative ms-3" id="cartButton">
+                        🛒
+                        <span id="cartCountBadge"
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0
+                        </span>
+                    </a>
+                <form class="d-flex ms-auto">
+                    <input class="form-control me-2" type="text" placeholder="Search">
+                    <button class="btn btn-primary" type="button">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido GridSystem -->
+    <!-- Carousel --> 
+    <div class="container-fluid">
+        <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+            <!-- Indicators/dots -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+            </div>
+
+            <!-- The slideshow/carousel -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="img/comidaVegana2.jpeg" alt="Los Angeles" class="d-block w-100">
+                    <!--centrado -->
+                    <div class="position-absolute top-50 start-50 translate-middle text-center w-100 px-3">
+                        <span class="d-inline-block bg-dark bg-opacity-50 text-white px-4 py-2 rounded-3 fs-3 fw-semibold">
+                            "Mi plato, mi elección, mi amabilidad"
+                        </span>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="img/comidaVegana7.jpg" alt="Chicago" class="d-block w-100">
+                     <div class="position-absolute top-50 start-50 translate-middle text-center w-100 px-3">
+                        <span class="d-inline-block bg-dark bg-opacity-50 text-white px-4 py-2 rounded-3 fs-3 fw-semibold">
+                            "Cambiando el mundo, una comida a la vez"
+                        </span>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="img/comidavegana8.jpg" alt="New York" class="d-block w-100">
+                    <div class="position-absolute top-50 start-50 translate-middle text-center w-100 px-3">
+                        <span class="d-inline-block bg-dark bg-opacity-50 text-white px-4 py-2 rounded-3 fs-3 fw-semibold">
+                            “Un plato más cerca de un mañana mejor”
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left and right controls/icons -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
     </div>
-  </nav>
 
-  <main class="container py-4">
-    <div class="d-flex flex-wrap gap-2 mb-4">
-      <button class="btn btn-outline-success btn-sm active" data-filter="all" onclick="filtra('all', this)">Todo</button>
-      <button class="btn btn-outline-success btn-sm" data-filter="bowls" onclick="filtra('bowls', this)">Bowls</button>
-      <button class="btn btn-outline-success btn-sm" data-filter="wraps" onclick="filtra('wraps', this)">Wraps</button>
-      <button class="btn btn-outline-success btn-sm" data-filter="burgers" onclick="filtra('burgers', this)">Burgers</button>
-      <button class="btn btn-outline-success btn-sm" data-filter="sopas" onclick="filtra('sopas', this)">Sopas</button>
-      <button class="btn btn-outline-success btn-sm" data-filter="postres" onclick="filtra('postres', this)">Postres</button>
+    <!-- Footer -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center bg-primary text-white py-2">
+                MiEmpresaComidaVegana@2025.com
+            </div>
+        </div>
     </div>
 
-    <div class="row g-4" id="grid">
-      <div class="col-sm-6 col-lg-4 item" data-cat="bowls">
-        <div class="card h-100">
-          <img src="img/bowl-quinoa.jpg" class="card-img-top" alt="Bowl de quinoa">
-          <div class="card-body">
-            <h5 class="card-title">Bowl Proteico</h5>
-            <p class="small text-muted">Quinoa, tofu, kale, tahini-limón.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <strong>$6.900</strong><button class="btn btn-success btn-sm">Agregar</button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- Modal Contacto -->
+    <div class="modal fade" id="m1">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-      <div class="col-sm-6 col-lg-4 item" data-cat="wraps">
-        <div class="card h-100">
-          <img src="img/wrap-falafel.jpg" class="card-img-top" alt="Wrap de falafel">
-          <div class="card-body">
-            <h5 class="card-title">Wrap de Falafel</h5>
-            <p class="small text-muted">Falafel horneado, hummus, vegetales frescos.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <strong>$5.900</strong><button class="btn btn-success btn-sm">Agregar</button>
-            </div>
-          </div>
-        </div>
-      </div>
+                <div class="modal-header">
+                    <h4 class="modal-title">Contactos</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
-      <div class="col-sm-6 col-lg-4 item" data-cat="burgers">
-        <div class="card h-100">
-          <img src="img/burger-lentejas.jpg" class="card-img-top" alt="Hamburguesa de lentejas">
-          <div class="card-body">
-            <h5 class="card-title">Burger de Lentejas</h5>
-            <p class="small text-muted">Pan integral, bbq casera.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <strong>$7.200</strong><button class="btn btn-success btn-sm">Agregar</button>
-            </div>
-          </div>
-        </div>
-      </div>
+                <div class="modal-body">
+                    <form action="/action_page.php">
+                        <div class="mb-3 mt-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="exampleFormControlTextarea1">Mensaje</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
 
-      <div class="col-sm-6 col-lg-4 item" data-cat="sopas">
-        <div class="card h-100">
-          <img src="img/ramen-miso.jpg" class="card-img-top" alt="Ramen miso vegano">
-          <div class="card-body">
-            <h5 class="card-title">Ramen Miso</h5>
-            <p class="small text-muted">Tofu, shiitake, nori, cebollín.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <strong>$7.900</strong><button class="btn btn-success btn-sm">Agregar</button>
+                <div class="modal-footer"></div>
             </div>
-          </div>
         </div>
-      </div>
-
-      <div class="col-sm-6 col-lg-4 item" data-cat="postres">
-        <div class="card h-100">
-          <img src="img/brownie.jpg" class="card-img-top" alt="Brownie vegano">
-          <div class="card-body">
-            <h5 class="card-title">Brownie Cacao</h5>
-            <p class="small text-muted">Nueces tostadas, sin lácteos.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <strong>$3.500</strong><button class="btn btn-success btn-sm">Agregar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Duplica más items cambiando data-cat y contenido -->
     </div>
-  </main>
 
-  <script>
-    function filtra(cat, btn){
-      document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('#grid .item').forEach(el=>{
-        el.style.display = (cat==='all' || el.dataset.cat===cat) ? '' : 'none';
-      });
+    <!-- Modal Quienes Somos -->
+    <div class="modal fade" id="m2">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Quienes Somos</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Modal body..
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+/** Carrito simple con localStorage, reutilizable entre páginas */
+(function () {
+  const CART_KEY = 'veggigo_cart_v1';
+
+  const $badge = document.getElementById('cartCountBadge');
+
+  function currency(n) {
+    try {
+      return new Intl.NumberFormat('es-CL', { style:'currency', currency:'CLP', maximumFractionDigits:0 }).format(n);
+    } catch { return '$' + n; }
+  }
+
+  function getCart() {
+    return JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+  }
+  function saveCart(cart) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateBadge();
+  }
+  function updateBadge() {
+    if (!$badge) return;
+    const count = getCart().reduce((s, i) => s + i.qty, 0);
+    $badge.textContent = count;
+    $badge.style.display = count ? '' : 'none';
+  }
+  function addToCart(product, qty) {
+    const cart = getCart();
+    const i = cart.findIndex(p => p.id === product.id);
+    if (i > -1) cart[i].qty += qty; else cart.push({ ...product, qty });
+    saveCart(cart);
+  }
+
+  // Captura de clicks en botones [data-add-to-cart]
+  document.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('[data-add-to-cart]');
+    if (!btn) return;
+
+    const rootSel = btn.getAttribute('data-product-root') || '#product';
+    const qtySel  = btn.getAttribute('data-qty-input')   || '#qty';
+    const redirect = (btn.getAttribute('data-redirect-to-cart') || 'true') === 'true';
+
+    const root = document.querySelector(rootSel);
+    const qtyEl = document.querySelector(qtySel);
+
+    if (!root) return;
+    const product = {
+      id: root.dataset.id,
+      name: root.dataset.name,
+      price: Number(root.dataset.price || 0),
+      image: root.dataset.image || ''
+    };
+    const qty = Math.max(1, parseInt(qtyEl ? qtyEl.value : (btn.getAttribute('data-qty') || '1'), 10) || 1);
+
+    addToCart(product, qty);
+
+    if (redirect) {
+      window.location.href = 'CarritoCompras.html';
+    } else {
+      // Si no quieres redirigir, sólo actualiza el badge
+      updateBadge();
     }
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  });
+
+  // Exponer helpers mínimos para la otra página (opcional)
+  window.VeggiGoCart = { getCart, saveCart, currency, updateBadge };
+
+  // Render inicial del badge
+  updateBadge();
+})();
+</script>
+
 </body>
 </html>
